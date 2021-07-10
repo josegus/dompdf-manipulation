@@ -4,9 +4,16 @@ namespace App\Support;
 
 use Barryvdh\DomPDF\Facade as DomPDF;
 use SimpleSoftwareIO\QrCode\Facades\QrCode;
+use Barryvdh\DomPDF\PDF;
+use Illuminate\Http\Response;
 
 class Invoice
 {
+    /**
+     * Collection of products to show in the invoice view
+     *
+     * @return \Illuminate\Support\Collection
+     */
     public static function products()
     {
         return collect([
@@ -17,6 +24,11 @@ class Invoice
         ]);
     }
 
+    /**
+     * Get the total sum of all products inside the invoice
+     *
+     * @return float
+     */
     public static function total(): float
     {
         return self::products()->sum(function (Product $product) {
@@ -24,6 +36,11 @@ class Invoice
         });
     }
 
+    /**
+     * Generate the invoice QR code
+     *
+     * @return string
+     */
     public static function qrCode()
     {
         $code = QrCode::format('png')->size(150)->generate('invoice-unique-code');
@@ -31,7 +48,13 @@ class Invoice
         return base64_encode($code);
     }
 
-    public static function viewAttributes($inBackground = false)
+    /**
+     * Attributes passes to view
+     *
+     * @param boolean $inBackground
+     * @return array
+     */
+    public static function attributes($inBackground = false): array
     {
         return [
             'products' => self::products(),
@@ -41,23 +64,44 @@ class Invoice
         ];
     }
 
-    public static function generatePdf($inBackground = false)
+    /**
+     * Generate PDF object
+     *
+     * @param boolean $inBackground
+     * @return PDF
+     */
+    public static function generatePdf($inBackground = false): PDF
     {
-        return DomPDF::loadView('invoice', self::viewAttributes($inBackground));
+        return DomPDF::loadView('invoice', self::attributes($inBackground));
     }
 
-    public static function download()
+    /**
+     * Force the download of the PDF file
+     *
+     * @return Response
+     */
+    public static function download(): Response
     {
         $filename = self::filename();
 
         return self::generatePdf(true)->download($filename);
     }
 
-    public static function outputAsBinary()
+    /**
+     * Output the PDF as a string
+     *
+     * @return string
+     */
+    public static function outputAsBinary(): string
     {
         return self::generatePdf(true)->output();
     }
 
+    /**
+     * Generate a unique string to be used as filename
+     *
+     * @return string
+     */
     public static function filename()
     {
         return 'invoice_' . now()->timestamp . '.pdf';

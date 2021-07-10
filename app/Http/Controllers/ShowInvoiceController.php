@@ -4,10 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Support\Invoice;
 
-class InvoiceController
+class ShowInvoiceController
 {
     public function __invoke()
     {
-        return view('invoice', Invoice::viewAttributes());
+        return view('invoice', Invoice::attributes());
     }
 }

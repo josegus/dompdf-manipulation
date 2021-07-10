@@ -10,7 +10,10 @@ class SendInvoiceController
 {
     public function __invoke()
     {
+        // String representation of invoice (binary string) can't be passed as parameter
+        // Uncomment lines below and see what the string looks like
         //$binary = Invoice::outputAsBinary();
+        //dd($binary);
 
         $filename = Invoice::filename();
 

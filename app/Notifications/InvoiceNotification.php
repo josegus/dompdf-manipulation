@@ -48,6 +48,7 @@ class InvoiceNotification extends Notification implements ShouldQueue
      */
     public function toMail($notifiable)
     {
+        // Note: Invoice::outputAsBinary could be a method inside a model
         return (new MailMessage)
                     ->line('Here is your invoice #10')
                     ->line('Thank you for using our application!')

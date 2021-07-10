@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\InvoiceController;
+use App\Http\Controllers\ShowInvoiceController;
 use App\Http\Controllers\SendInvoiceController;
 use App\Http\Controllers\DownloadInvoiceController;
 
@@ -16,6 +16,6 @@ use App\Http\Controllers\DownloadInvoiceController;
 |
 */
 
-Route::get('/', InvoiceController::class);
+Route::get('/', ShowInvoiceController::class);
 Route::get('invoice/download', DownloadInvoiceController::class)->name('invoice.download');
 Route::get('invoice/send', SendInvoiceController::class)->name('invoice.send');

@@ -6,16 +6,16 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css2?family=Lato:wght@300&display=swap" rel="stylesheet">
-    @if($inBackground)
-        <link rel="stylesheet" href="{{ public_path('css/invoice.css') }}">
-    @else
-        <link rel="stylesheet" href="{{ asset('css/invoice.css') }}">
-    @endif
     <style>
         * {
             font-family: 'Lato', sans-serif;
         }
     </style>
+    @if($inBackground)
+        <link rel="stylesheet" href="{{ public_path('css/invoice.css') }}">
+    @else
+        <link rel="stylesheet" href="{{ asset('css/invoice.css') }}">
+    @endif
     <title>Invoice</title>
 </head>
 <body>
@@ -31,6 +31,7 @@
         <table cellpadding="0" cellspacing="0">
             <tr>
                 <td class="w-50">
+                    {{-- Using a URL from another domain may not shown the image correctly --}}
                     {{-- <img src="https://via.placeholder.com/400x100?text=Your%20Company%20Logo" style="width: 100%; max-width: 300px"> --}}
                     @if($inBackground)
                         <img src="{{ public_path('img/invoice-logo.png') }}" style="width: 100%; max-width: 300px">
